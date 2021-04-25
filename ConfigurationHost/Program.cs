@@ -31,6 +31,8 @@ namespace ConfigurationHost
 
                      myhost.ConfigureServices((servicesCol)=> { servicesCol.Configure<TransientFaultHandlingOptions>(confRoot.GetSection(key: nameof(TransientFaultHandlingOptions))); });
                  });
+
+
             return myhost;
         }
     }
