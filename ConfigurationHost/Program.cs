@@ -29,9 +29,35 @@ namespace ConfigurationHost
                      config.AddJsonFile($"appsettins.{env.EnvironmentName}.json", true, true);
                      IConfigurationRoot confRoot = config.Build();
 
-                     myhost.ConfigureServices((servicesCol)=> { servicesCol.Configure<TransientFaultHandlingOptions>(confRoot.GetSection(key: nameof(TransientFaultHandlingOptions))); });
+                     #region Bind
+                     /*TransientFaultHandlingOptions options = new TransientFaultHandlingOptions { };
+                     confRoot.GetSection(nameof(TransientFaultHandlingOptions)).Bind(options);
+                     */
+                     #endregion
+
+                     #region IConfigureOptions<TOptions>
+                     /*myhost.ConfigureServices(
+                         (servicesCol)=> { servicesCol.Configure<TransientFaultHandlingOptions>(confRoot.GetSection(key: nameof(TransientFaultHandlingOptions)));
+                         
+                         }
+                         );*/
+                     #endregion
+
+                     #region RegistServices
+                     /*myhost.ConfigureServices((serviceCol) => {
+                         serviceCol.Configure<Features>("A", confRoot.GetSection("Features:Personalize"));
+                         serviceCol.Configure<Features>("B", confRoot.GetSection("Features:WeatherStation"));
+                         
+                     });*/
+                     #endregion
                  });
 
+            myhost.ConfigureServices(
+                (_, services) =>
+                {
+                    var optBuilder=services.AddOptions<Features>("OptionInstanceName");
+                });
+            
 
             return myhost;
         }

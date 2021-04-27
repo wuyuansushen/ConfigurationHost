@@ -9,18 +9,32 @@ namespace ConfigurationHost
 {
     public class ExampleService
     {
-        private readonly TransientFaultHandlingOptions _transientFaultHandlingOptions;
+        public bool ranBool { get; set; }
 
-        public ExampleService(IOptionsSnapshot<TransientFaultHandlingOptions> options)
+        public ExampleService()
+        { 
+            Random i = new();
+            var num = i.Next(1, 3);
+            if (num < 2)
+                ranBool = true;
+            else
+                ranBool = false;
+        }
+
+        #region nonNamed
+        /*private readonly TransientFaultHandlingOptions _transientFaultHandlingOptions;
+
+        public ExampleService(IOptionsMonitor<TransientFaultHandlingOptions> options)
             {
-            _transientFaultHandlingOptions = options.Value;
+            _transientFaultHandlingOptions = options.CurrentValue;
         }
 
         public void DisplayValues()
         {
             Console.WriteLine(_transientFaultHandlingOptions.Enabled);
             Console.WriteLine(_transientFaultHandlingOptions.AutoRetryDelay);
-        }
+        }*/
+        #endregion
 
     }
 }
